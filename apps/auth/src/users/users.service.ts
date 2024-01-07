@@ -9,7 +9,7 @@ export class UsersService {
    createUser(createUserDto: CreateUserDto) {
       return this.userRespository.create({
          ...createUserDto,
-         timestamp: new Date(),
+           timestamp: new Date(),
       });
    }
 }

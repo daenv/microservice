@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ModelDefinition, MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule } from '../config';
 @Module({
    imports: [
       MongooseModule.forRootAsync({
-         imports: [ConfigModule],
          useFactory: (configServer: ConfigService) => ({
             uri: configServer.get('MONGO_URI'),
          }),
