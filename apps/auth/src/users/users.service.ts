@@ -1,7 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserRepository } from './users.repository';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt  from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
+import { TokenPayLoad } from './interfaces/token-payload.interface';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,12 +21,15 @@ export class UsersService {
       const passwordIsValid = await bcrypt.compare(password, user.password);
 
       try {
-          if(!passwordIsValid){
-               throw new UnauthorizedException('Credentials are not valid.')
-          }
-          return user
+         if (!passwordIsValid) {
+            throw new UnauthorizedException('Credentials are not valid.');
+         }
+         return user;
       } catch (error) {
-          console.log('Error', error)
+         console.log('Error', error);
       }
+   }
+   async getUser({ _id }: GetUserDto) {
+      return this.userRespository.findOne({ _id });
    }
 }

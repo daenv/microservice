@@ -4,6 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { UsersService } from '../users.service';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
+import { TokenPayLoad } from '../interfaces/token-payload.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,5 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       });
    }
 
-   async validate({}) {}
+   async validate({ userId }: TokenPayLoad) {
+      return this.usersService.getUser({ _id: userId });
+   }
 }
