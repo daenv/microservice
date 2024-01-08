@@ -9,6 +9,7 @@ import * as Joi from 'joi';
 import { LocalStrategy } from './users/strategies/local.strategy';
 import { JwtStrategy } from './users/strategies/jwt.strategy';
 
+
 @Module({
    imports: [
       UsersModule,
@@ -16,7 +17,7 @@ import { JwtStrategy } from './users/strategies/jwt.strategy';
       JwtModule.registerAsync({
          useFactory: (configService: ConfigService) => ({
             secret: configService.get<string>('JWT_SECRET'),
-            signOptions: { expiresIn: `${configService.get('JWT_EXPIRATION')}s` },
+            signOptions: { expiresIn: `${configService.get('JWT_EXPIRATION')}s` },  
          }),
          inject: [ConfigService],
       }),
