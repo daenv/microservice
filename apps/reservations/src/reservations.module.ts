@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
-import { DatabaseModule } from '@app/common/database';
+import { DatabaseModule, AUTH_SERVICE ,JwtAuthGuard,LoggerModule } from '@app/common';
 import { ReservationDocument, ReservationSchema } from './models/reservation.schema';
 import { ReservationRepository } from './reservations.repository';
-import { LoggerModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+
 
 @Module({
    imports: [
@@ -17,10 +18,12 @@ import * as Joi from 'joi';
          isGlobal: true,
          validationSchema: Joi.object({
             MONGO_URI: Joi.string().required(),
+            PORT: Joi.number().required(),
          }),
       }),
+      ClientsModule.register([{ name: AUTH_SERVICE, transport: Transport.TCP }]),
    ],
    controllers: [ReservationsController],
-   providers: [ReservationsService, ReservationRepository],
+   providers: [ReservationsService, ReservationRepository, JwtAuthGuard],
 })
 export class ReservationsModule {}
