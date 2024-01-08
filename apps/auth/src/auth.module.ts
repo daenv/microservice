@@ -16,7 +16,7 @@ import * as Joi from 'joi';
             secret: configService.get<string>('JWT_SECRET'),
             signOptions: { expiresIn: `${configService.get('JWT_EXPIRATION')}s` },
          }),
-         
+         inject: [ConfigService],
       }),
       ConfigModule.forRoot({
          isGlobal: true,
