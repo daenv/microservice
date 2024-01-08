@@ -767,7 +767,7 @@
 
 "@nestjs/microservices@^10.3.0":
   version "10.3.0"
-  resolved "https://registry.npmjs.org/@nestjs/microservices/-/microservices-10.3.0.tgz"
+  resolved "https://registry.yarnpkg.com/@nestjs/microservices/-/microservices-10.3.0.tgz#3c9262d926d8b56eed6373756f4a3e54466fb7d7"
   integrity sha512-CZj27dEN4Rh6t9cRXv5EEg+HwkOUk02DDdS7x4eLcphnP4wgsLNDEo8vQ2gbQHFGpZhLUyeeynjNGkpV9T3+og==
   dependencies:
     iterare "1.2.1"

@@ -10,12 +10,20 @@ export class UsersService {
    constructor(private readonly userRespository: UserRepository) {}
 
    async createUser(createUserDto: CreateUserDto) {
+      await this.checkUserCreated(createUserDto);
       return this.userRespository.create({
          ...createUserDto,
          timestamp: new Date(),
       });
    }
-
+   private async checkUserCreated(checkUser: CreateUserDto) {
+      try {
+         await this.userRespository.findOne({ username: checkUser.username, email: checkUser.email });
+      } catch (error) {
+         return;
+      }
+      throw new UnauthorizedException('User already exists.');
+   }
    async veryfyUser(username: string, password: string) {
       const user = await this.userRespository.findOne({ username });
       const passwordIsValid = await bcrypt.compare(password, user.password);
