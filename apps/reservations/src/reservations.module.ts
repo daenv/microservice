@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ReservationsService } from './reservations.service';
 import { ReservationsController } from './reservations.controller';
-import { DatabaseModule, AUTH_SERVICE ,JwtAuthGuard,LoggerModule } from '@app/common';
+import { DatabaseModule, AUTH_SERVICE, JwtAuthGuard, LoggerModule } from '@app/common';
 import { ReservationDocument, ReservationSchema } from './models/reservation.schema';
 import { ReservationRepository } from './reservations.repository';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-
 
 @Module({
    imports: [
@@ -21,7 +20,19 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
             PORT: Joi.number().required(),
          }),
       }),
-      ClientsModule.register([{ name: AUTH_SERVICE, transport: Transport.TCP }]),
+      ClientsModule.registerAsync([
+         {
+            name: AUTH_SERVICE,
+            useFactory: (configService: ConfigService) => ({
+               transport: Transport.TCP,
+               options: {
+                  host: configService.get('AUTH_HOST'),
+                  port: configService.get('AUTH_PORT'),
+               },
+            }),
+            inject: [ConfigService],
+         },
+      ]),
    ],
    controllers: [ReservationsController],
    providers: [ReservationsService, ReservationRepository, JwtAuthGuard],
