@@ -30,6 +30,7 @@ import { JwtStrategy } from './users/strategies/jwt.strategy';
             HTTP_PORT: Joi.number().required(),
          }),
       }),
+      JwtAuthGuard
    ],
    controllers: [AuthController],
    providers: [AuthService, LocalStrategy, JwtStrategy],

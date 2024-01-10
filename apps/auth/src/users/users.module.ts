@@ -9,10 +9,9 @@ import { UserRepository } from './users.repository';
    imports: [
       DatabaseModule,
       DatabaseModule.forFeature([{ name: UserDocument.name, schema: UserSchema }]),
-      
    ],
    controllers: [UsersController],
-   providers: [UsersService, UserRepository,JwtAuthGuard],
+   providers: [UsersService, UserRepository, JwtAuthGuard],
    exports: [UsersService],
 })
 export class UsersModule {}
