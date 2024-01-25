@@ -12,7 +12,7 @@ export class OrdersRepository extends AbstractRepository<Order> {
     @InjectModel(Order.name) orderModel: Model<Order>,
     @InjectConnection() connection: Connection,
   ) {
-    //@ts-expect-error
+    //@ts-ignore
     super(orderModel, connection);
   }
 }
