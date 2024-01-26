@@ -21,7 +21,7 @@ services:
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_ROOT_PASSWORD=password123 
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
     volumes:
       - 'mongodb_master_data:/bitnami/mongodb'
