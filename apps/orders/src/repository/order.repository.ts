@@ -8,11 +8,7 @@ import { Connection, Model } from 'mongoose';
 export class OrdersRepository extends AbstractRepository<Order> {
   protected readonly logger = new Logger(OrdersRepository.name);
 
-  constructor(
-    @InjectModel(Order.name) orderModel: Model<Order>,
-    @InjectConnection() connection: Connection,
-  ) {
-    //@ts-ignore
-    super(orderModel, connection);
+  constructor(@InjectModel(Order.name) orderModel: Model<Order>) {
+    super(orderModel);
   }
 }
