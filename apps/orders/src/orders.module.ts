@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import * as Joi from 'joi';
+import { DatabaseModule, RmqModule } from '@app/common';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
-import { ConfigModule } from '@nestjs/config';
-// import { DatabaseModule } from '@app/common';
-import * as Joi from 'joi';
-import { DatabaseModule, RmqModule, RmqService } from '@app/common';
 import { OrdersRepository } from './repository/order.repository';
-import { MongooseModule } from '@nestjs/mongoose';
 import { Order, OrderSchema } from './schema/orders.schema';
 import { BILLING_SERVICE } from './constants/service';
 
