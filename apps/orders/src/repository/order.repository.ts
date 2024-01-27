@@ -12,7 +12,6 @@ export class OrdersRepository extends AbstractRepository<Order> {
     @InjectModel(Order.name) orderModel: Model<Order>,
     @InjectConnection() connection: Connection,
   ) {
-    //@ts-ignore
     super(orderModel, connection);
   }
 }
