@@ -7,10 +7,6 @@ async function bootstrap() {
   const app = await NestFactory.create(OrdersModule);
   app.useGlobalPipes(new ValidationPipe());
   const configService = app.get(ConfigService);
-  await app.listen(configService.get('PORT'), () =>
-    console.log(
-      `Orders service is listening on port ${configService.get('PORT')}`,
-    ),
-  );
+  await app.listen(configService.get('PORT'));
 }
 bootstrap();
