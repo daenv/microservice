@@ -30,16 +30,16 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     ).toJSON() as unknown as TDocument;
   }
 
-  // async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
-  //   const document = await this.model.findOne(filterQuery, {}, { lean: true });
+  async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
+    const document = await this.model.findOne(filterQuery, {}, { lean: true });
 
-  //   if (!document) {
-  //     this.logger.warn('Document not found with filterQuery', filterQuery);
-  //     throw new NotFoundException('Document not found.');
-  //   }
+    if (!document) {
+      this.logger.warn('Document not found with filterQuery', filterQuery);
+      throw new NotFoundException('Document not found.');
+    }
 
-  //   return document;
-  // }
+    return document;
+  }
 
   async findOneAndUpdate(
     filterQuery: FilterQuery<TDocument>,
@@ -73,9 +73,9 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     return this.model.find(filterQuery, {}, { lean: true });
   }
 
-  // async startTransaction() {
-  //   const session = await this.connection.startSession();
-  //   session.startTransaction();
-  //   return session;
-  // }
+  async startTransaction() {
+    const session = await this.connection.startSession();
+    session.startTransaction();
+    return session;
+  }
 }
