@@ -17,9 +17,10 @@ export class RmqService {
       },
     };
   }
+
   ack(context: RmqContext) {
-    const chanel = context.getChannelRef();
+    const channel = context.getChannelRef();
     const originalMessage = context.getMessage();
-    chanel.ack(originalMessage);
+    channel.ack(originalMessage);
   }
 }
