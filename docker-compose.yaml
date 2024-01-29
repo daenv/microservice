@@ -12,6 +12,7 @@ services:
       - mongodb-secondary
       - mongodb-arbiter
       - billing
+      - auth
       - rabbitmq
     volumes:
       - .:/usr/src/app
@@ -31,6 +32,25 @@ services:
       - mongodb-secondary
       - mongodb-arbiter
       - rabbitmq
+      - auth
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./apps/auth/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -39,7 +59,7 @@ services:
     ports:
       - '5672:5672'
   mongodb-primary:
-    image: docker.io/bitnami/mongodb:7.0
+    image: docker.io/bitnami/mongodb:5.0
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_REPLICA_SET_MODE=primary
@@ -49,8 +69,9 @@ services:
       - 'mongodb_master_data:/bitnami/mongodb'
     ports:
       - '27017:27017'
+
   mongodb-secondary:
-    image: docker.io/bitnami/mongodb:7.0
+    image: docker.io/bitnami/mongodb:5.0
     depends_on:
       - mongodb-primary
     environment:
@@ -61,7 +82,7 @@ services:
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
   mongodb-arbiter:
-    image: docker.io/bitnami/mongodb:7.0
+    image: docker.io/bitnami/mongodb:5.0
     depends_on:
       - mongodb-primary
     environment:
