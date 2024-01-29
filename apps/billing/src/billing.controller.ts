@@ -3,8 +3,6 @@ import { BillingService } from './billing.service';
 import { Ctx, EventPattern, Payload, RmqContext } from '@nestjs/microservices';
 import { RmqService, JwtAuthGuard } from '@app/common';
 
-
-
 @Controller()
 export class BillingController {
   constructor(
